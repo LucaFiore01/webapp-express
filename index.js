@@ -1,7 +1,6 @@
 const express = require('express');
 
-const healthRoutes = require('./routes/health');
-const moviesRoutes = require('./routes/movies');
+const apiRoutes = require('./routes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,8 +12,7 @@ app.get('/', (req, res) => {
     res.send('Ciao! Server Express attivo.');
 });
 
-app.use('/health', healthRoutes);
-app.use('/movies', moviesRoutes);
+app.use('/', apiRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server avviato su http://localhost:${PORT}`);
