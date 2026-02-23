@@ -47,6 +47,40 @@ app.get('/movies', async (req, res) => {
     }
 });
 
+// Rotta show: dettaglio di un film e le sue recensioni
+app.get('/movies/:id', async (req, res) => {
+    const movieId = Number(req.params.id);
+
+    if (Number.isNaN(movieId)) {
+        return res.status(400).json({ ok: false, error: 'ID non valido' });
+    }
+
+    try {
+        const connection = await mysql.createConnection(dbConfig);
+
+        const [movies] = await connection.query(
+            'SELECT * FROM movies WHERE id = ?',
+            [movieId]
+        );
+
+        if (movies.length === 0) {
+            await connection.end();
+            return res.status(404).json({ ok: false, error: 'Film non trovato' });
+        }
+
+        const [reviews] = await connection.query(
+            'SELECT * FROM reviews WHERE movie_id = ?',
+            [movieId]
+        );
+
+        await connection.end();
+
+        res.json({ movie: movies[0], reviews });
+    } catch (err) {
+        res.status(500).json({ ok: false, error: err.message });
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Server avviato su http://localhost:${PORT}`);
 });
