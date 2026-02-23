@@ -14,6 +14,11 @@ app.get('/', (req, res) => {
 
 app.use('/', apiRoutes);
 
+// Middleware per rotte inesistenti
+app.use((req, res) => {
+    res.status(404).json({ error: 'Rotta non trovata' });
+});
+
 app.listen(PORT, () => {
     console.log(`Server avviato su http://localhost:${PORT}`);
 });
