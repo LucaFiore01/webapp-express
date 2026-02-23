@@ -19,6 +19,11 @@ app.use((req, res) => {
     res.status(404).json({ error: 'Rotta non trovata' });
 });
 
+// Middleware per errori generici
+app.use((err, req, res, next) => {
+    res.status(500).json({ error: 'Errore interno del server' });
+});
+
 app.listen(PORT, () => {
     console.log(`Server avviato su http://localhost:${PORT}`);
 });
