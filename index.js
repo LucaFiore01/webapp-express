@@ -32,6 +32,21 @@ app.get('/health', async (req, res) => {
     }
 });
 
+// Rotta index: restituisce la lista dei film
+app.get('/movies', async (req, res) => {
+    try {
+        const connection = await mysql.createConnection(dbConfig);
+        const [rows] = await connection.query(
+            'SELECT id, title, director, genre, release_year FROM movies'
+        );
+        await connection.end();
+
+        res.json(rows);
+    } catch (err) {
+        res.status(500).json({ ok: false, error: err.message });
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Server avviato su http://localhost:${PORT}`);
 });
