@@ -6,6 +6,9 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// File statici: immagini servite da /images
+app.use('/images', express.static('public/images'));
+
 // Connessione semplice al DB usando le variabili in .env
 const dbConfig = {
     host: process.env.DB_HOST,
