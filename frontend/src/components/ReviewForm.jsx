@@ -9,17 +9,15 @@ function ReviewForm({ onSubmit, isSubmitting, errorMessage, successMessage }) {
     async function handleSubmit(event) {
         event.preventDefault()
 
-        const createdReview = await onSubmit({
+        await onSubmit({
             name: name.trim(),
             vote: Number(vote),
             text: text.trim(),
         })
 
-        if (createdReview) {
-            setName('')
-            setVote(5)
-            setText('')
-        }
+        setName('')
+        setVote(5)
+        setText('')
     }
 
     return (
