@@ -114,6 +114,20 @@ body {
   --bs-alert-border-color: #a3cfbb;
 }
 
+.btn:focus-visible,
+.nav-link:focus-visible,
+.form-control:focus-visible,
+.form-select:focus-visible,
+a:focus-visible {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(var(--bs-danger-rgb), 0.25), 0 0 0 0.35rem rgba(var(--bs-dark-rgb), 0.25) !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: rgba(var(--bs-danger-rgb), 0.55);
+}
+
 .movie-card {
   overflow: hidden;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
