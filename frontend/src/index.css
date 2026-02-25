@@ -2,4 +2,29 @@ body {
   margin: 0;
   min-width: 320px;
   font-family: inherit;
+  background: var(--bs-light);
+  color: var(--bs-body-color);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.page-hero {
+  background: linear-gradient(180deg, var(--bs-white) 0%, var(--bs-light) 100%);
+  border: 1px solid var(--bs-border-color);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.section-card {
+  border: 1px solid var(--bs-border-color);
+  border-radius: 1rem;
+  background: var(--bs-white);
+}
+
+.movie-poster-placeholder {
+  min-height: 300px;
+  border-radius: 0.5rem;
 }
