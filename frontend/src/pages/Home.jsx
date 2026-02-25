@@ -25,18 +25,20 @@ function Home() {
 
     return (
         <section>
-            <h1 className="mb-3">Film in evidenza</h1>
-            <p className="text-muted mb-4">Lista film caricata dal backend tramite chiamata Ajax.</p>
+            <div className="page-hero shadow-sm">
+                <h1 className="mb-2">Film in evidenza</h1>
+                <p className="text-muted mb-0">Lista film caricata dal backend tramite chiamata Ajax.</p>
+            </div>
 
             {isLoading && (
-                <div className="d-flex align-items-center gap-2">
+                <div className="section-card d-flex align-items-center gap-2 p-3">
                     <Spinner animation="border" size="sm" />
                     <span>Caricamento film...</span>
                 </div>
             )}
 
             {!isLoading && errorMessage && (
-                <Alert variant="danger" className="mb-0">
+                <Alert variant="danger" className="mb-0 section-card">
                     {errorMessage}
                 </Alert>
             )}

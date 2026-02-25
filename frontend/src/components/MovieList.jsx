@@ -6,7 +6,7 @@ function MovieList({ movies }) {
         <Row className="g-4">
             {movies.map((movie) => (
                 <Col key={movie.id} xs={12} md={6} lg={4}>
-                    <Card className="h-100 shadow-sm">
+                    <Card className="h-100 shadow-sm border-0">
                         {movie.image ? (
                             <Card.Img
                                 variant="top"
@@ -16,13 +16,13 @@ function MovieList({ movies }) {
                             />
                         ) : (
                             <div
-                                className="d-flex align-items-center justify-content-center bg-secondary-subtle text-muted"
+                                className="movie-poster-placeholder d-flex align-items-center justify-content-center bg-secondary-subtle text-muted"
                                 style={{ height: '320px' }}
                             >
                                 Nessuna copertina
                             </div>
                         )}
-                        <Card.Body className="d-flex flex-column">
+                        <Card.Body className="d-flex flex-column p-4">
                             <Card.Title>{movie.title}</Card.Title>
                             <Card.Text className="text-muted mb-2">
                                 {movie.director} · {movie.release_year ?? movie.year}
