@@ -1,9 +1,16 @@
 const express = require('express');
+const cors = require('cors');
 
 const apiRoutes = require('./routes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.use(
+    cors({
+        origin: 'http://localhost:5173'
+    })
+);
 
 // File statici: immagini servite da /images
 app.use('/images', express.static('public/images'));
