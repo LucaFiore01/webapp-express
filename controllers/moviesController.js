@@ -74,7 +74,7 @@ async function show(req, res) {
         }
 
         const [reviews] = await connection.query(
-            'SELECT * FROM reviews WHERE movie_id = ?',
+            'SELECT * FROM reviews WHERE movie_id = ? ORDER BY created_at ASC, id ASC',
             [movieId]
         );
 
