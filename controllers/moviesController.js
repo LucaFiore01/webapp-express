@@ -86,4 +86,48 @@ async function show(req, res) {
     }
 }
 
-module.exports = { index, show };
+async function storeReview(req, res) {
+    const movieId = Number(req.params.id);
+    const { name, vote, text } = req.body;
+
+    if (Number.isNaN(movieId)) {
+        return res.status(400).json({ ok: false, error: 'ID non valido' });
+    }
+
+    if (!name || typeof name !== 'string' || !name.trim()) {
+        return res.status(400).json({ ok: false, error: 'Il nome è obbligatorio' });
+    }
+
+    if (!text || typeof text !== 'string' || !text.trim()) {
+        return res.status(400).json({ ok: false, error: 'Il testo della recensione è obbligatorio' });
+    }
+
+    const numericVote = Number(vote);
+    if (!Number.isInteger(numericVote) || numericVote < 1 || numericVote > 5) {
+        return res.status(400).json({ ok: false, error: 'Il voto deve essere un numero intero tra 1 e 5' });
+    }
+
+    try {
+        const connection = await getConnection();
+
+        const [movies] = await connection.query('SELECT id FROM movies WHERE id = ?', [movieId]);
+        if (movies.length === 0) {
+            await connection.end();
+            return res.status(404).json({ ok: false, error: 'Film non trovato' });
+        }
+
+        const [result] = await connection.query(
+            'INSERT INTO reviews (movie_id, name, vote, text) VALUES (?, ?, ?, ?)',
+            [movieId, name.trim(), numericVote, text.trim()]
+        );
+
+        const [createdReviews] = await connection.query('SELECT * FROM reviews WHERE id = ?', [result.insertId]);
+        await connection.end();
+
+        return res.status(201).json({ ok: true, review: createdReviews[0] });
+    } catch (err) {
+        return res.status(500).json({ ok: false, error: err.message });
+    }
+}
+
+module.exports = { index, show, storeReview };
