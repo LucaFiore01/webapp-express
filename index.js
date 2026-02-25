@@ -12,6 +12,8 @@ app.use(
     })
 );
 
+app.use(express.json());
+
 // File statici: immagini servite da /images
 app.use('/images', express.static('movies_cover'));
 app.use('/images', express.static('public/movies_cover'));
