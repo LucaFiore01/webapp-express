@@ -13,7 +13,8 @@ app.use(
 );
 
 // File statici: immagini servite da /images
-app.use('/images', express.static('public/images'));
+app.use('/images', express.static('movies_cover'));
+app.use('/images', express.static('public/movies_cover'));
 
 app.get('/', (req, res) => {
     res.send('Ciao! Server Express attivo.');

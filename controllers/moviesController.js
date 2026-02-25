@@ -1,22 +1,41 @@
 const { getConnection } = require('../db');
 
-function buildImageUrl(req, imageValue) {
-    if (!imageValue) {
+const COVER_BY_TITLE = {
+    inception: 'inception.jpg',
+    'the godfather': 'the_godfather.jpg',
+    titanic: 'titanic.jpg',
+    'the matrix': 'matrix.jpg',
+    interstellar: 'interstellar.jpg'
+};
+
+function getCoverFileName(movie) {
+    const titleKey = String(movie.title || '').trim().toLowerCase();
+    if (COVER_BY_TITLE[titleKey]) {
+        return COVER_BY_TITLE[titleKey];
+    }
+
+    if (!movie.image) {
         return null;
     }
 
-    if (String(imageValue).startsWith('http://') || String(imageValue).startsWith('https://')) {
-        return imageValue;
+    return String(movie.image).split('/').pop();
+}
+
+function buildImageUrl(req, fileName) {
+    if (!fileName) {
+        return null;
     }
 
-    const fileName = String(imageValue).replace(/^\/+/, '');
-    return `${req.protocol}://${req.get('host')}/images/${fileName}`;
+    const normalizedFileName = String(fileName).replace(/^\/+/, '');
+    return `${req.protocol}://${req.get('host')}/images/${normalizedFileName}`;
 }
 
 function normalizeMovie(req, movie) {
+    const coverFileName = getCoverFileName(movie);
+
     return {
         ...movie,
-        image: buildImageUrl(req, movie.image)
+        image: buildImageUrl(req, coverFileName)
     };
 }
 
