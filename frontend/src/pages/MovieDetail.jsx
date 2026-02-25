@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { Alert, Card, ListGroup, Spinner } from 'react-bootstrap'
 import MovieDetailCard from '../components/MovieDetailCard.jsx'
+import ReviewForm from '../components/ReviewForm.jsx'
 
 function MovieDetail() {
     const { id } = useParams()
@@ -10,6 +11,9 @@ function MovieDetail() {
     const [reviews, setReviews] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [errorMessage, setErrorMessage] = useState('')
+    const [isSubmittingReview, setIsSubmittingReview] = useState(false)
+    const [reviewErrorMessage, setReviewErrorMessage] = useState('')
+    const [reviewSuccessMessage, setReviewSuccessMessage] = useState('')
 
     useEffect(() => {
         async function fetchMovieDetail() {
@@ -20,6 +24,8 @@ function MovieDetail() {
                 const response = await axios.get(`http://localhost:3000/movies/${id}`)
                 setMovie(response.data.movie)
                 setReviews(response.data.reviews ?? [])
+                setReviewErrorMessage('')
+                setReviewSuccessMessage('')
             } catch (error) {
                 if (error.response?.status === 404) {
                     setErrorMessage('Film non trovato.')
@@ -44,6 +50,26 @@ function MovieDetail() {
 
     function getReviewVote(review) {
         return review.vote ?? review.rating ?? review.score ?? null
+    }
+
+    async function handleReviewSubmit(payload) {
+        setReviewErrorMessage('')
+        setReviewSuccessMessage('')
+        setIsSubmittingReview(true)
+
+        try {
+            const response = await axios.post(`http://localhost:3000/movies/${id}/reviews`, payload)
+            const createdReview = response.data.review
+            setReviews((currentReviews) => [...currentReviews, createdReview])
+            setReviewSuccessMessage('Recensione salvata correttamente.')
+            return createdReview
+        } catch (error) {
+            const message = error.response?.data?.error ?? 'Errore durante il salvataggio della recensione.'
+            setReviewErrorMessage(message)
+            return null
+        } finally {
+            setIsSubmittingReview(false)
+        }
     }
 
     return (
@@ -99,6 +125,13 @@ function MovieDetail() {
                             )}
                         </Card.Body>
                     </Card>
+
+                    <ReviewForm
+                        onSubmit={handleReviewSubmit}
+                        isSubmitting={isSubmittingReview}
+                        errorMessage={reviewErrorMessage}
+                        successMessage={reviewSuccessMessage}
+                    />
                 </>
             )}
         </section>
