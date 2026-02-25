@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import MainLayout from './layouts/MainLayout.jsx'
 import Home from './pages/Home.jsx'
 import Movies from './pages/Movies.jsx'
@@ -12,7 +12,8 @@ function App() {
         <Route index element={<Home />} />
         <Route path="movies" element={<Movies />} />
         <Route path="movies/:id" element={<MovieDetail />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="404" element={<NotFound />} />
+        <Route path="*" element={<Navigate to="/404" replace />} />
       </Route>
     </Routes>
   )

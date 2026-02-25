@@ -1,14 +1,34 @@
 const { getConnection } = require('../db');
 
+function buildImageUrl(req, imageValue) {
+    if (!imageValue) {
+        return null;
+    }
+
+    if (String(imageValue).startsWith('http://') || String(imageValue).startsWith('https://')) {
+        return imageValue;
+    }
+
+    const fileName = String(imageValue).replace(/^\/+/, '');
+    return `${req.protocol}://${req.get('host')}/images/${fileName}`;
+}
+
+function normalizeMovie(req, movie) {
+    return {
+        ...movie,
+        image: buildImageUrl(req, movie.image)
+    };
+}
+
 async function index(req, res) {
     try {
         const connection = await getConnection();
         const [rows] = await connection.query(
-            'SELECT id, title, director, genre, release_year FROM movies'
+            'SELECT id, title, director, genre, release_year, image FROM movies'
         );
         await connection.end();
 
-        res.json(rows);
+        res.json(rows.map((movie) => normalizeMovie(req, movie)));
     } catch (err) {
         res.status(500).json({ ok: false, error: err.message });
     }
@@ -41,7 +61,7 @@ async function show(req, res) {
 
         await connection.end();
 
-        res.json({ movie: movies[0], reviews });
+        res.json({ movie: normalizeMovie(req, movies[0]), reviews });
     } catch (err) {
         res.status(500).json({ ok: false, error: err.message });
     }
