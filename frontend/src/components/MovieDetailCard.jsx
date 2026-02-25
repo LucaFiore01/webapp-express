@@ -5,12 +5,21 @@ function MovieDetailCard({ movie }) {
         <Card className="shadow-sm">
             <Row className="g-0">
                 <Col md={4}>
-                    <Card.Img
-                        src={movie.image}
-                        alt={movie.title}
-                        className="h-100"
-                        style={{ objectFit: 'cover', minHeight: '300px' }}
-                    />
+                    {movie.image ? (
+                        <Card.Img
+                            src={movie.image}
+                            alt={movie.title}
+                            className="h-100"
+                            style={{ objectFit: 'cover', minHeight: '300px' }}
+                        />
+                    ) : (
+                        <div
+                            className="d-flex align-items-center justify-content-center bg-secondary-subtle text-muted h-100"
+                            style={{ minHeight: '300px' }}
+                        >
+                            Nessuna copertina
+                        </div>
+                    )}
                 </Col>
                 <Col md={8}>
                     <Card.Body>
@@ -20,9 +29,11 @@ function MovieDetailCard({ movie }) {
                         <Card.Text className="text-muted mb-2">
                             Regia: {movie.director}
                         </Card.Text>
-                        <Card.Text className="text-muted mb-2">Anno: {movie.year}</Card.Text>
+                        <Card.Text className="text-muted mb-2">
+                            Anno: {movie.release_year ?? movie.year}
+                        </Card.Text>
                         <Card.Text className="text-muted mb-4">Genere: {movie.genre}</Card.Text>
-                        <Card.Text>{movie.plot}</Card.Text>
+                        <Card.Text>{movie.plot ?? 'Trama non disponibile.'}</Card.Text>
                     </Card.Body>
                 </Col>
             </Row>
