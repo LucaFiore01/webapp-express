@@ -4,7 +4,7 @@ import { NavLink, Outlet } from 'react-router-dom'
 function MainLayout() {
     return (
         <div className="d-flex flex-column min-vh-100 bg-light-subtle">
-            <Navbar bg="dark" variant="dark" expand="lg" className="shadow-sm">
+            <Navbar bg="dark" variant="dark" expand="lg" className="shadow-sm app-navbar">
                 <Container>
                     <Navbar.Brand as={NavLink} to="/" className="fw-semibold">
                         MovieHub
