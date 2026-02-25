@@ -74,7 +74,7 @@ function MovieDetail() {
 
     return (
         <section>
-            <div className="d-flex align-items-center justify-content-between mb-3">
+            <div className="d-flex align-items-center justify-content-between mb-4">
                 <h1 className="mb-0">Dettaglio film</h1>
                 <Link className="btn btn-outline-primary" to="/">
                     Torna alla home
@@ -98,7 +98,7 @@ function MovieDetail() {
                 <>
                     <MovieDetailCard movie={movie} />
 
-                    <Card className="shadow-sm mt-4">
+                    <Card className="shadow-sm mt-4 border-0 section-card">
                         <Card.Body>
                             <Card.Title as="h3" className="mb-3">
                                 Recensioni
@@ -112,7 +112,7 @@ function MovieDetail() {
                                         const vote = getReviewVote(review)
 
                                         return (
-                                            <ListGroup.Item key={review.id} className="px-0">
+                                            <ListGroup.Item key={review.id} className="px-0 review-item bg-transparent">
                                                 <p className="fw-semibold mb-1">{getReviewAuthor(review)}</p>
                                                 {vote !== null && (
                                                     <p className="text-muted mb-1">Voto: {vote}</p>
