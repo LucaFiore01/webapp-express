@@ -1,8 +1,15 @@
+:root {
+  --bs-primary: var(--bs-danger);
+  --bs-primary-rgb: var(--bs-danger-rgb);
+  --bs-link-color: var(--bs-danger);
+  --bs-link-hover-color: #b02a37;
+}
+
 body {
   margin: 0;
   min-width: 320px;
   font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  background: var(--bs-light);
+  background: linear-gradient(180deg, rgba(var(--bs-dark-rgb), 0.95) 0%, rgba(var(--bs-dark-rgb), 0.88) 100%);
   color: var(--bs-body-color);
 }
 
@@ -30,21 +37,81 @@ body {
 }
 
 .app-navbar {
+  background: var(--bs-dark) !important;
+  border-bottom: 2px solid var(--bs-danger);
   backdrop-filter: blur(6px);
 }
 
 .app-navbar .nav-link {
+  color: rgba(255, 255, 255, 0.88) !important;
   border-radius: 0.55rem;
   padding-inline: 0.85rem !important;
   transition: background-color 0.2s ease;
 }
 
 .app-navbar .nav-link:hover {
-  background: rgba(255, 255, 255, 0.09);
+  background: rgba(var(--bs-danger-rgb), 0.3);
+  color: var(--bs-white) !important;
 }
 
 .app-navbar .nav-link.active {
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(var(--bs-danger-rgb), 0.5);
+  color: var(--bs-white) !important;
+}
+
+.app-navbar .navbar-brand {
+  color: var(--bs-danger) !important;
+}
+
+.app-content {
+  background: var(--bs-light);
+  border-top-left-radius: 1.25rem;
+  border-top-right-radius: 1.25rem;
+  margin-top: 1rem;
+}
+
+.app-footer {
+  background: var(--bs-dark) !important;
+  border-top: 2px solid var(--bs-danger) !important;
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--bs-danger);
+  --bs-btn-border-color: var(--bs-danger);
+  --bs-btn-hover-bg: #b02a37;
+  --bs-btn-hover-border-color: #a52834;
+  --bs-btn-active-bg: #a52834;
+  --bs-btn-active-border-color: #8f2330;
+}
+
+.btn-outline-primary {
+  --bs-btn-color: #b02a37;
+  --bs-btn-border-color: #b02a37;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #b02a37;
+  --bs-btn-hover-border-color: #b02a37;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #a52834;
+  --bs-btn-active-border-color: #a52834;
+}
+
+.alert-danger {
+  --bs-alert-color: #842029;
+  --bs-alert-bg: #f8d7da;
+  --bs-alert-border-color: #f1aeb5;
+}
+
+.alert-warning {
+  --bs-alert-color: #5a1a20;
+  --bs-alert-bg: #fce8eb;
+  --bs-alert-border-color: #f1aeb5;
+}
+
+.alert-success {
+  --bs-alert-color: #0f5132;
+  --bs-alert-bg: #d1e7dd;
+  --bs-alert-border-color: #a3cfbb;
 }
 
 .movie-card {

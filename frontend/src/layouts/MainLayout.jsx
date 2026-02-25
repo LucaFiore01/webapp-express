@@ -3,7 +3,7 @@ import { NavLink, Outlet } from 'react-router-dom'
 
 function MainLayout() {
     return (
-        <div className="d-flex flex-column min-vh-100 bg-light-subtle">
+        <div className="d-flex flex-column min-vh-100 app-shell">
             <Navbar bg="dark" variant="dark" expand="lg" className="shadow-sm app-navbar">
                 <Container>
                     <Navbar.Brand as={NavLink} to="/" className="fw-semibold">
@@ -23,12 +23,12 @@ function MainLayout() {
                 </Container>
             </Navbar>
 
-            <Container className="flex-grow-1 py-4">
+            <Container className="flex-grow-1 py-4 app-content">
                 <Outlet />
             </Container>
 
-            <footer className="bg-white border-top py-3 mt-auto">
-                <Container className="text-center text-muted">
+            <footer className="py-3 mt-auto app-footer">
+                <Container className="text-center">
                     MovieHub - React + Vite
                 </Container>
             </footer>
