@@ -178,3 +178,15 @@ a:focus-visible {
   background: var(--bs-white);
   padding: 1.75rem;
 }
+
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1080;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: rgba(var(--bs-dark-rgb), 0.35);
+  color: var(--bs-white);
+}
