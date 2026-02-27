@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
-import { Alert, Card, ListGroup, Spinner } from 'react-bootstrap'
+import { Alert, Card, ListGroup } from 'react-bootstrap'
 import MovieDetailCard from '../components/MovieDetailCard.jsx'
+import Loader from '../components/Loader.jsx'
 import ReviewForm from '../components/ReviewForm.jsx'
 
 function MovieDetail() {
@@ -82,10 +83,7 @@ function MovieDetail() {
             </div>
 
             {isLoading && (
-                <div className="d-flex align-items-center gap-2">
-                    <Spinner animation="border" size="sm" />
-                    <span>Caricamento dettaglio...</span>
-                </div>
+                <Loader message="Caricamento dettaglio..." />
             )}
 
             {!isLoading && errorMessage && (
