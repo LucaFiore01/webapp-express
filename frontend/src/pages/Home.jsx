@@ -2,13 +2,12 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Alert } from 'react-bootstrap'
 import MovieList from '../components/MovieList.jsx'
-import { useLoader } from '../contexts/LoaderContext.jsx'
+import { usePageLoader } from '../contexts/LoaderContext.jsx'
 
 function Home() {
     const [movies, setMovies] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [errorMessage, setErrorMessage] = useState('')
-    const { showLoader, hideLoader } = useLoader()
 
     useEffect(() => {
         async function fetchMovies() {
@@ -25,18 +24,7 @@ function Home() {
         fetchMovies()
     }, [])
 
-    useEffect(() => {
-        if (isLoading) {
-            showLoader('Caricamento film...')
-            return
-        }
-
-        hideLoader()
-
-        return () => {
-            hideLoader()
-        }
-    }, [hideLoader, isLoading, showLoader])
+    usePageLoader(isLoading, 'Caricamento film...')
 
     return (
         <section>
