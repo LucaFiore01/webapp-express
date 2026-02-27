@@ -4,7 +4,7 @@ import axios from 'axios'
 import { Alert, Card, ListGroup } from 'react-bootstrap'
 import MovieDetailCard from '../components/MovieDetailCard.jsx'
 import ReviewForm from '../components/ReviewForm.jsx'
-import { useLoader } from '../contexts/LoaderContext.jsx'
+import { usePageLoader } from '../contexts/LoaderContext.jsx'
 
 function MovieDetail() {
     const { id } = useParams()
@@ -15,7 +15,6 @@ function MovieDetail() {
     const [isSubmittingReview, setIsSubmittingReview] = useState(false)
     const [reviewErrorMessage, setReviewErrorMessage] = useState('')
     const [reviewSuccessMessage, setReviewSuccessMessage] = useState('')
-    const { showLoader, hideLoader } = useLoader()
 
     useEffect(() => {
         async function fetchMovieDetail() {
@@ -42,18 +41,8 @@ function MovieDetail() {
         fetchMovieDetail()
     }, [id])
 
-    useEffect(() => {
-        if (isLoading) {
-            showLoader('Caricamento dettaglio...')
-            return
-        }
-
-        hideLoader()
-
-        return () => {
-            hideLoader()
-        }
-    }, [hideLoader, isLoading, showLoader])
+    usePageLoader(isLoading, 'Caricamento dettaglio...')
+    usePageLoader(isSubmittingReview, 'Invio recensione...')
 
     function getReviewAuthor(review) {
         return review.reviewer_name ?? review.name ?? review.author ?? 'Utente'
