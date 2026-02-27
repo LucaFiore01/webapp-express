@@ -3,8 +3,8 @@ import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { Alert, Card, ListGroup } from 'react-bootstrap'
 import MovieDetailCard from '../components/MovieDetailCard.jsx'
-import Loader from '../components/Loader.jsx'
 import ReviewForm from '../components/ReviewForm.jsx'
+import { useLoader } from '../contexts/LoaderContext.jsx'
 
 function MovieDetail() {
     const { id } = useParams()
@@ -15,6 +15,7 @@ function MovieDetail() {
     const [isSubmittingReview, setIsSubmittingReview] = useState(false)
     const [reviewErrorMessage, setReviewErrorMessage] = useState('')
     const [reviewSuccessMessage, setReviewSuccessMessage] = useState('')
+    const { showLoader, hideLoader } = useLoader()
 
     useEffect(() => {
         async function fetchMovieDetail() {
@@ -40,6 +41,19 @@ function MovieDetail() {
 
         fetchMovieDetail()
     }, [id])
+
+    useEffect(() => {
+        if (isLoading) {
+            showLoader('Caricamento dettaglio...')
+            return
+        }
+
+        hideLoader()
+
+        return () => {
+            hideLoader()
+        }
+    }, [hideLoader, isLoading, showLoader])
 
     function getReviewAuthor(review) {
         return review.reviewer_name ?? review.name ?? review.author ?? 'Utente'
@@ -81,10 +95,6 @@ function MovieDetail() {
                     Torna alla home
                 </Link>
             </div>
-
-            {isLoading && (
-                <Loader message="Caricamento dettaglio..." />
-            )}
 
             {!isLoading && errorMessage && (
                 <Alert variant="warning" className="mb-0">
